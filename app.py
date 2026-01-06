@@ -136,7 +136,7 @@ def process_image_video(image, video_path, use_gfpgan, sr_weight, use_color_tran
     video.release()
     videoWriter.release()
 
-    add_audio_to_video(video_path, swap_video_path)
+    # add_audio_to_video(video_path, swap_video_path)
 
     return swap_video_path
 
@@ -147,11 +147,15 @@ def add_audio_to_video(original_video_path, swapped_video_path):
         os.system(f'ffmpeg -y -hide_banner -loglevel error -i "{original_video_path}" -f wav -vn "{audio_file_path}"')
 
     temp_output_path = swapped_video_path.replace('.mp4', '_with_audio.mp4')
+    # 将 音频 文件 融合到 swap video 中输出为 output path
     os.system(
         f'ffmpeg -y -hide_banner -loglevel error -i "{swapped_video_path}" -i "{audio_file_path}" -c:v copy -c:a aac "{temp_output_path}"')
 
-    os.remove(swapped_video_path)
-    os.rename(temp_output_path, swapped_video_path)
+    import pdb
+    pdb.set_trace()
+
+    # os.remove(swapped_video_path)
+    # os.rename(temp_output_path, swapped_video_path)
 
 
 # Gradio interface setup
@@ -172,4 +176,4 @@ iface = gr.Interface(
 )
 
 if __name__ == "__main__":
-    iface.launch()
+    iface.launch(server_name='0.0.0.0', server_port=20026)

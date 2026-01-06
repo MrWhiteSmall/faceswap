@@ -1,3 +1,5 @@
+import util_for_gradio
+
 import cv2
 import numexpr as ne
 import numpy as np
@@ -335,3 +337,12 @@ def color_transfer(ct_mode, img_src, img_trg):
     else:
         raise ValueError(f"unknown ct_mode {ct_mode}")
     return out
+
+'''
+缩写	计算速度	效果精准度	核心优势	适用场景
+RCT	最快	中等（全局）	简单易实现，轻量化	快速整体色彩风格迁移
+LCT	较快	中高（线性）	保留色彩结构，灵活	人像 / 物体的自然色彩迁移
+MKL	中等	中高（协方差）	精准匹配色彩分布形状	科研 / 高精度色彩适配
+IDT	较慢	高（直方图）	局部色彩细节匹配好	风格化 / 艺术化色彩迁移
+SOT	中等偏慢	最高（最优传输）	全局 + 局部适配，自然	高质量商用级色彩迁移
+'''
